@@ -1,7 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:zeroheatproject/constants/common_size.dart';
+import 'package:zeroheatproject/states/user_provider.dart';
 import 'package:zeroheatproject/utils/logger.dart';
+import 'package:provider/provider.dart';
 
 class IntroPage extends StatelessWidget {
   PageController controller;
@@ -9,6 +12,7 @@ class IntroPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    logger.d('current user state: ${context.read<UserProvider>().userState}');
     return LayoutBuilder(
       builder: (context, constraints) {
         Size size = MediaQuery.of(context).size; //디바이스 크기 가져오는 미디어쿼리
@@ -57,7 +61,7 @@ class IntroPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     TextButton(
-                      onPressed: () {
+                      onPressed: () async {
                         controller.animateToPage(1,
                             duration: Duration(microseconds: 500),
                             curve: Curves.ease);

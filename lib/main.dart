@@ -1,15 +1,19 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:zeroheatproject/router/locations.dart';
 import 'package:zeroheatproject/screens/start_screen.dart';
 import 'package:zeroheatproject/screens/splash_screen.dart';
+import 'package:zeroheatproject/states/user_provider.dart';
 import 'package:zeroheatproject/utils/logger.dart';
 
 final _routerDelegate = BeamerDelegate(guards: [
   BeamGuard(
       pathPatterns: ['/'],
       check: (context, location) {
-        return false; //로그인이 안되있다. false , 로그인이 되있다. true
+        return context
+            .watch<UserProvider>()
+            .userState; //read = 노티파이더 안받음, watch = 노티파이어받을때 씀
       },
       showPage: BeamPage(child: StartScreen()))
 ], locationBuilder: BeamerLocationBuilder(beamLocations: [HomeLocation()]));
@@ -52,29 +56,34 @@ class TomatoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-        theme: ThemeData(
-          primarySwatch: Colors.red,
-          fontFamily: 'DoHyeon',
-          hintColor: Colors.grey[350],
-          textTheme: TextTheme(
-            button: TextStyle(color: Colors.white),
-          ),
-          textButtonTheme: TextButtonThemeData(
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.red,
-              primary: Colors.white,
-              minimumSize: Size(48, 48),
+    return ChangeNotifierProvider<UserProvider>(
+      create: (BuildContext context) {
+        return UserProvider();
+      },
+      child: MaterialApp.router(
+          theme: ThemeData(
+            primarySwatch: Colors.red,
+            fontFamily: 'DoHyeon',
+            hintColor: Colors.grey[350],
+            textTheme: TextTheme(
+              button: TextStyle(color: Colors.white),
             ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.red,
+                primary: Colors.white,
+                minimumSize: Size(48, 48),
+              ),
+            ),
+            appBarTheme: AppBarTheme(
+                backgroundColor: Colors.white,
+                titleTextStyle: TextStyle(color: Colors.black87),
+                elevation: 2,
+                actionsIconTheme: IconThemeData(color: Colors.black87)),
           ),
-          appBarTheme: AppBarTheme(
-            backgroundColor: Colors.white,
-            titleTextStyle: TextStyle(color: Colors.black87),
-            elevation: 2,
+          routeInformationParser: BeamerParser(), //비머한테 모든 로케이션을 맡긴다.
+          routerDelegate: _routerDelegate //글로벌 변수로 설정
           ),
-        ),
-        routeInformationParser: BeamerParser(), //비머한테 모든 로케이션을 맡긴다.
-        routerDelegate: _routerDelegate //글로벌 변수로 설정
-        );
+    );
   }
 }
