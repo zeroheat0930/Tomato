@@ -7,8 +7,7 @@ import 'package:zeroheatproject/utils/logger.dart';
 import 'package:provider/provider.dart';
 
 class IntroPage extends StatelessWidget {
-  PageController controller;
-  IntroPage(this.controller, {Key? key}) : super(key: key);
+  IntroPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +61,7 @@ class IntroPage extends StatelessWidget {
                   children: [
                     TextButton(
                       onPressed: () async {
-                        controller.animateToPage(1,
+                        context.read<PageController>().animateToPage(1,
                             duration: Duration(microseconds: 500),
                             curve: Curves.ease);
                         logger.d('on text button clicked!!!');

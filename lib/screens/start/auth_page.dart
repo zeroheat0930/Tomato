@@ -1,9 +1,11 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zeroheatproject/constants/common_size.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:zeroheatproject/states/user_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:zeroheatproject/utils/logger.dart';
 
 class AuthPage extends StatefulWidget {
   AuthPage({Key? key}) : super(key: key);
@@ -187,6 +189,12 @@ class _AuthPageState extends State<AuthPage> {
     context
         .read<UserProvider>()
         .setUserAuth(true); //watch로하면 유저프로바이더갔다 다시 워치로 가는 루프가 돌아버리는 오류 발생
+  }
+
+  _getAddress() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String address = prefs.getString('address') ?? "";
+    logger.d('address from shared pref - $address');
   }
 }
 

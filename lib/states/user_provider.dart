@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart'; //쿠펄티노 해도됨
 
 class UserProvider extends ChangeNotifier {
-  bool _userLoggedIn = false; //프라이빗으로 해줘야됨, false-로그인안됨 true-로그인됨
+  bool _userLoggedIn = true; //프라이빗으로 해줘야됨, false-로그인안됨 true-로그인됨
 
   void setUserAuth(bool authState) {
     _userLoggedIn = authState;

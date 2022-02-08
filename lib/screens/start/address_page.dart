@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zeroheatproject/constants/common_size.dart';
 import 'package:zeroheatproject/data/address_model.dart';
 import 'package:zeroheatproject/data/address_model2.dart';
 import 'package:zeroheatproject/screens/start/address_service.dart';
 import 'package:zeroheatproject/utils/logger.dart';
+import 'package:provider/provider.dart';
 
 class AddressPage extends StatefulWidget {
   AddressPage({Key? key}) : super(key: key);
@@ -20,6 +22,12 @@ class _AddressPageState extends State<AddressPage> {
   AddressModel? _addressModel;
   List<AddressModel2> _addressModel2List = [];
   bool _isGettingLocation = false;
+
+  @override
+  void dispose() {
+    _addressController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -135,6 +143,11 @@ class _AddressPageState extends State<AddressPage> {
                       _addressModel!.result!.items![index].address == null)
                     return Container();
                   return ListTile(
+                    onTap: () {
+                      _saveAddressAndGoToNextPage(
+                          _addressModel!.result!.items![index].address!.road ??
+                              "");
+                    },
                     title: Text(
                         _addressModel!.result!.items![index].address!.road ??
                             ""),
@@ -161,6 +174,10 @@ class _AddressPageState extends State<AddressPage> {
                       _addressModel2List[index].result!.isEmpty)
                     return Container();
                   return ListTile(
+                    onTap: () {
+                      _saveAddressAndGoToNextPage(
+                          _addressModel2List[index].result![0].text ?? "");
+                    },
                     title:
                         Text(_addressModel2List[index].result![0].text ?? ""),
                     subtitle: Text(
@@ -173,5 +190,16 @@ class _AddressPageState extends State<AddressPage> {
         ],
       ),
     );
+  }
+
+  _saveAddressAndGoToNextPage(String address) async {
+    await _sameAddressOnSharedPreference(address);
+    context.read<PageController>().animateToPage(2,
+        duration: Duration(microseconds: 500), curve: Curves.ease);
+  }
+
+  _sameAddressOnSharedPreference(String address) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('address', address);
   }
 }

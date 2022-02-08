@@ -20,6 +20,8 @@ final _routerDelegate = BeamerDelegate(guards: [
 
 void main() {
   logger.d('my first log by logger!');
+  Provider.debugCheckInvalidValueType =
+      null; //일반적으로 프로바이더만 잘안쓰기 때매 수동으로 런앱 되기전에 널 넣어줘야됨
   runApp(MyApp());
 }
 
@@ -67,6 +69,14 @@ class TomatoApp extends StatelessWidget {
             hintColor: Colors.grey[350],
             textTheme: TextTheme(
               button: TextStyle(color: Colors.white),
+              subtitle1: TextStyle(
+                color: Colors.black87,
+                fontSize: 15,
+              ),
+              subtitle2: TextStyle(
+                color: Colors.grey,
+                fontSize: 13,
+              ),
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
@@ -75,11 +85,18 @@ class TomatoApp extends StatelessWidget {
                 minimumSize: Size(48, 48),
               ),
             ),
-            appBarTheme: AppBarTheme(
+            appBarTheme: const AppBarTheme(
                 backgroundColor: Colors.white,
-                titleTextStyle: TextStyle(color: Colors.black87),
+                titleTextStyle: TextStyle(
+                  color: Colors.black87,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
                 elevation: 2,
                 actionsIconTheme: IconThemeData(color: Colors.black87)),
+            bottomNavigationBarTheme: BottomNavigationBarThemeData(
+                selectedItemColor: Colors.black87,
+                unselectedItemColor: Colors.black54),
           ),
           routeInformationParser: BeamerParser(), //비머한테 모든 로케이션을 맡긴다.
           routerDelegate: _routerDelegate //글로벌 변수로 설정
