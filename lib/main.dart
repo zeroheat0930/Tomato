@@ -12,9 +12,8 @@ final _routerDelegate = BeamerDelegate(guards: [
   BeamGuard(
       pathPatterns: ['/'],
       check: (context, location) {
-        return context
-            .watch<UserProvider>()
-            .userState; //read = 노티파이더 안받음, watch = 노티파이어받을때 씀
+        return context.watch<UserProvider>().user != null;
+        // .userState; //read = 노티파이더 안받음, watch = 노티파이어받을때 씀
       },
       showPage: BeamPage(child: StartScreen()))
 ], locationBuilder: BeamerLocationBuilder(beamLocations: [HomeLocation()]));
