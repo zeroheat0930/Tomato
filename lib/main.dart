@@ -1,4 +1,5 @@
 import 'package:beamer/beamer.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeroheatproject/router/locations.dart';
@@ -22,17 +23,26 @@ void main() {
   logger.d('my first log by logger!');
   Provider.debugCheckInvalidValueType =
       null; //일반적으로 프로바이더만 잘안쓰기 때매 수동으로 런앱 되기전에 널 넣어줘야됨
+  WidgetsFlutterBinding.ensureInitialized(); //플러터 구동하기전 해줘야됨
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final Future<FirebaseApp> _initialization =
+      Firebase.initializeApp(); // 파이어베이스 기본세팅
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: Future.delayed(
-            Duration(microseconds: 300), () => 100), //작업을 리퀘스트하면 도착하는 퓨처
+        future: _initialization,
+        // Future.delayed(Duration(microseconds: 300), () => 100), //작업을 리퀘스트하면 도착하는 퓨처
         builder: (context, snapshot) {
           return AnimatedSwitcher(
               //자동으로 애니메이션 줘서 화면전환
@@ -45,7 +55,7 @@ class MyApp extends StatelessWidget {
     if (snapshot.hasError) {
       print('로딩하는동안 에러가 발생했다.');
       return Text('에러 오컬');
-    } else if (snapshot.hasData) {
+    } else if (snapshot.connectionState == ConnectionState.done) {
       return TomatoApp();
     } else {
       return SplashScreen();

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "950379246508",
+    "project_id": "zeroheat-tomato",
+    "storage_bucket": "zeroheat-tomato.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:950379246508:android:33444353f59ed28d60c009",
+        "android_client_info": {
+          "package_name": "com.zeroheat.project.zeroheatproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "950379246508-qfs6640d5pnd71aqgjmv92jjirgke4j1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zeroheat.project.zeroheatproject",
+            "certificate_hash": "98bc2edf8a829defe5373bb75b8f48c2e8c1381b"
+          }
+        },
+        {
+          "client_id": "950379246508-1htl7tb5d85r5tdoh3t4t39od5j03d2c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGmLZr_ZJ9jNBI5CJSSwfrC3tP2IU-VN8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "950379246508-1htl7tb5d85r5tdoh3t4t39od5j03d2c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
