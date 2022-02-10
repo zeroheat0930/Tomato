@@ -14,6 +14,7 @@ class UserProvider extends ChangeNotifier {
   }
 
   User? _user;
+  UserModel? _userModel;
 
   void initUser() {
     FirebaseAuth.instance.authStateChanges().listen((user) async {
@@ -36,8 +37,6 @@ class UserProvider extends ChangeNotifier {
           userKey: userKey,
           phoneNumber: phoneNumber,
           address: address,
-          lat: lat,
-          lon: lon,
           geoFirePoint: GeoFirePoint(lat, lon),
           createdDate: DateTime.now().toUtc());
 

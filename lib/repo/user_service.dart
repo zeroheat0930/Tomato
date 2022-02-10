@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:zeroheatproject/data/user_model.dart';
 import 'package:zeroheatproject/utils/logger.dart';
 import 'package:zeroheatproject/constants/data_keys.dart';
 
@@ -16,6 +17,12 @@ class UserService {
     if (!documentSnapshot.exists) {
       await documentReference.set(json);
     }
+  }
+
+  Future<UserModel> getUserModel(String userKey) async {
+    DocumentReference<Map<String, dynamic>> documentReference =
+        FirebaseFirestore.instance.collection(COL_USERS).doc(userKey);
+    final DocumentSnapshot documentSnapshot = await documentReference.get();
   }
 
   Future firestoreTest() async {
