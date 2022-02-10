@@ -1,5 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zeroheatproject/constants/shared_pref_keys.dart';
+import 'package:zeroheatproject/data/user_model.dart';
+import 'package:zeroheatproject/repo/user_service.dart';
 import 'package:zeroheatproject/utils/logger.dart'; //쿠펄티노 해도됨
 
 class UserProvider extends ChangeNotifier {
@@ -9,12 +14,35 @@ class UserProvider extends ChangeNotifier {
   }
 
   User? _user;
+
   void initUser() {
-    FirebaseAuth.instance.authStateChanges().listen((user) {
-      _user = user;
-      logger.d('user status - $user');
+    FirebaseAuth.instance.authStateChanges().listen((user) async {
+      await _setNewUser(user);
       notifyListeners();
     });
+  }
+
+  Future _setNewUser(User? user) async {
+    _user = user;
+    if (user != null && user.phoneNumber != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String address = prefs.getString(SHARED_ADDRESS) ?? "";
+      double lat = prefs.getDouble(SHARED_LAT) ?? 0;
+      double lon = prefs.getDouble(SHARED_LON) ?? 0;
+      String phoneNumber = user.phoneNumber!;
+      String userKey = user.uid;
+
+      UserModel userModel = UserModel(
+          userKey: userKey,
+          phoneNumber: phoneNumber,
+          address: address,
+          lat: lat,
+          lon: lon,
+          geoFirePoint: GeoFirePoint(lat, lon),
+          createdDate: DateTime.now().toUtc());
+
+      await UserService().createNewUser(userModel.toJson(), userKey);
+    }
   }
 
   User? get user => _user;

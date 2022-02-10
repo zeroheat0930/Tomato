@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zeroheatproject/constants/common_size.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
+import 'package:zeroheatproject/constants/shared_pref_keys.dart';
 import 'package:zeroheatproject/states/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:zeroheatproject/utils/logger.dart';
@@ -257,8 +258,9 @@ class _AuthPageState extends State<AuthPage> {
 
   _getAddress() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String address = prefs.getString('address') ?? "";
-    logger.d('address from shared pref - $address');
+    String address = prefs.getString(SHARED_ADDRESS) ?? "";
+    double lat = prefs.getDouble(SHARED_LAT) ?? 0;
+    double lon = prefs.getDouble(SHARED_LON) ?? 0;
   }
 }
 

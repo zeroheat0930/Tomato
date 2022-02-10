@@ -6,6 +6,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:zeroheatproject/constants/common_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:zeroheatproject/repo/user_service.dart';
 
 class ItemsPage extends StatelessWidget {
   const ItemsPage({Key? key}) : super(key: key);
@@ -42,74 +43,80 @@ class ItemsPage extends StatelessWidget {
     return ListView.separated(
       padding: EdgeInsets.all(common_padding),
       itemBuilder: (context, index) {
-        return SizedBox(
-          height: imgSize,
-          child: Row(
-            children: [
-              SizedBox(
-                height: imgSize,
-                width: imgSize,
-                child: ExtendedImage.network(
-                  'https://picsum.photos/100',
-                  shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.circular(12),
+        return InkWell(
+          onTap: () {
+            UserService().firestoreReadTest();
+          },
+          child: SizedBox(
+            height: imgSize,
+            child: Row(
+              children: [
+                SizedBox(
+                  height: imgSize,
+                  width: imgSize,
+                  child: ExtendedImage.network(
+                    'https://picsum.photos/100',
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: common_sm_padding,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "work",
-                      style: Theme.of(context).textTheme.subtitle1,
-                    ),
-                    Text('53일전', style: Theme.of(context).textTheme.subtitle2),
-                    Text('5000원'),
-                    Expanded(
-                      child: Container(),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                          height: 14,
-                          child: FittedBox(
-                            fit: BoxFit.fitHeight,
-                            child: Row(
-                              children: [
-                                Icon(
-                                  CupertinoIcons.chat_bubble_2,
-                                  color: Colors.grey,
-                                ),
-                                Text(
-                                  '23',
-                                  style: TextStyle(
+                SizedBox(
+                  width: common_sm_padding,
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "work",
+                        style: Theme.of(context).textTheme.subtitle1,
+                      ),
+                      Text('53일전',
+                          style: Theme.of(context).textTheme.subtitle2),
+                      Text('5000원'),
+                      Expanded(
+                        child: Container(),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          SizedBox(
+                            height: 14,
+                            child: FittedBox(
+                              fit: BoxFit.fitHeight,
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    CupertinoIcons.chat_bubble_2,
                                     color: Colors.grey,
                                   ),
-                                ),
-                                Icon(
-                                  CupertinoIcons.heart,
-                                  color: Colors.grey,
-                                ),
-                                Text(
-                                  '30',
-                                  style: TextStyle(
+                                  Text(
+                                    '23',
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  Icon(
+                                    CupertinoIcons.heart,
                                     color: Colors.grey,
                                   ),
-                                ),
-                              ],
+                                  Text(
+                                    '30',
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
