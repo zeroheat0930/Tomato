@@ -22,7 +22,10 @@ class UserService {
   Future<UserModel> getUserModel(String userKey) async {
     DocumentReference<Map<String, dynamic>> documentReference =
         FirebaseFirestore.instance.collection(COL_USERS).doc(userKey);
-    final DocumentSnapshot documentSnapshot = await documentReference.get();
+    final DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+        await documentReference.get();
+    UserModel userModel = UserModel.fromSnapshot(documentSnapshot);
+    return userModel;
   }
 
   Future firestoreTest() async {

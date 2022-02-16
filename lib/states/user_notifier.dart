@@ -5,11 +5,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zeroheatproject/constants/shared_pref_keys.dart';
 import 'package:zeroheatproject/data/user_model.dart';
 import 'package:zeroheatproject/repo/user_service.dart';
-import 'package:zeroheatproject/utils/logger.dart'; //쿠펄티노 해도됨
+import 'package:zeroheatproject/utils/logger.dart';
 
-class UserProvider extends ChangeNotifier {
-  // bool _userLoggedIn = false; //프라이빗으로 해줘야됨, false-로그인안됨 true-로그인됨
-  UserProvider() {
+class UserNotifier extends ChangeNotifier {
+  UserNotifier() {
     initUser();
   }
 
@@ -34,7 +33,7 @@ class UserProvider extends ChangeNotifier {
       String userKey = user.uid;
 
       UserModel userModel = UserModel(
-          userKey: userKey,
+          userKey: "",
           phoneNumber: phoneNumber,
           address: address,
           geoFirePoint: GeoFirePoint(lat, lon),
@@ -47,10 +46,5 @@ class UserProvider extends ChangeNotifier {
   }
 
   User? get user => _user;
-  // void setUserAuth(bool authState) {
-  //   _userLoggedIn = authState;
-  //   notifyListeners(); //체인지 노티파이어에서 나온 메소드
-  // }
-  //
-  // bool get userState => _userLoggedIn;
+  UserModel? get userModel => _userModel;
 }

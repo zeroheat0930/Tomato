@@ -12,7 +12,7 @@ class SplashScreen extends StatelessWidget {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ExtendedImage.asset('assets/imgs/1313.png'),
+          ExtendedImage.asset('assets/imgs/tomato.png'),
           CircularProgressIndicator(
             color: Colors.red,
           )
