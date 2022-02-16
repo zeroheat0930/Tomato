@@ -78,25 +78,25 @@ class ItemService {
     return items;
   }
 
-  Future<List<ItemModel>> getNearByItems(String userKey, LatLng latLng) async {
-    final geo = Geoflutterfire();
-    final itemCol = FirebaseFirestore.instance.collection(COL_ITEMS);
-
-    GeoFirePoint center = GeoFirePoint(latLng.latitude, latLng.longitude);
-    double radius = 1.5;
-    var field = DOC_GEOFIREPOINT;
-
-    List<ItemModel> items = [];
-    List<DocumentSnapshot<Map<String, dynamic>>> snapshots = await geo
-        .collection(collectionRef: itemCol)
-        .within(center: center, radius: radius, field: field)
-        .first;
-
-    for (int i = 0; i < snapshots.length; i++) {
-      ItemModel itemModel = ItemModel.fromSnapshot(snapshots[i]);
-      //todo: remove my own item
-      items.add(itemModel);
-    }
-
-    return items;
-  }
+  // Future<List<ItemModel>> getNearByItems(String userKey, LatLng latLng) async {
+  //   final geo = Geoflutterfire();
+  //   final itemCol = FirebaseFirestore.instance.collection(COL_ITEMS);
+  //
+  //   GeoFirePoint center = GeoFirePoint(latLng.latitude, latLng.longitude);
+  //   double radius = 1.5;
+  //   var field = DOC_GEOFIREPOINT;
+  //
+  //   List<ItemModel> items = [];
+  //   List<DocumentSnapshot<Map<String, dynamic>>> snapshots = await geo
+  //       .collection(collectionRef: itemCol)
+  //       .within(center: center, radius: radius, field: field)
+  //       .first;
+  //
+  //   for (int i = 0; i < snapshots.length; i++) {
+  //     ItemModel itemModel = ItemModel.fromSnapshot(snapshots[i]);
+  //     //todo: remove my own item
+  //     items.add(itemModel);
+  //   }
+  //
+  //   return items;
+}

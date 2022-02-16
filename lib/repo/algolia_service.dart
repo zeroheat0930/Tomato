@@ -2,8 +2,8 @@ import 'package:algolia/algolia.dart';
 import 'package:zeroheatproject/data/item_model.dart';
 
 const Algolia algolia = Algolia.init(
-  applicationId: '',
-  apiKey: '',
+  applicationId: 'XHMVJHF3WU',
+  apiKey: 'c3c020fb1b92d2f4ebc9c99646079eca',
 );
 
 class AlgoliaService {
