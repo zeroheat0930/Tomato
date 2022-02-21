@@ -11,10 +11,10 @@ import 'package:zeroheatproject/utils/logger.dart';
 final _routerDelegate = BeamerDelegate(
     guards: [
       BeamGuard(
-          pathPatterns: [
-            ...HomeLocation().pathPatterns,
-            ...InputLocation().pathPatterns,
-            ...ItemLocation().pathPatterns
+          pathBlueprints: [
+            ...HomeLocation().pathBlueprints,
+            ...InputLocation().pathBlueprints,
+            ...ItemLocation().pathBlueprints
           ],
           check: (context, location) {
             return context.watch<UserNotifier>().user != null;

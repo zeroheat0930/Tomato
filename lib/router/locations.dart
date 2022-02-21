@@ -20,21 +20,21 @@ const LOCATION_ITEM_ID = 'item_id';
 const LOCATION_CHATROOM_ID = 'chatroom_id';
 const LOCATION_CATEGORY_INPUT = 'category_input';
 
-class HomeLocation extends BeamLocation<BeamState> {
+class HomeLocation extends BeamLocation {
   @override
   List<BeamPage> buildPages(BuildContext context, BeamState state) {
     return [
       BeamPage(child: HomeScreen(), key: ValueKey(LOCATION_HOME)),
-      if (state.pathPatternSegments.contains(LOCATION_SEARCH))
+      if (state.pathBlueprintSegments.contains(LOCATION_SEARCH))
         BeamPage(key: ValueKey(LOCATION_SEARCH), child: SearchScreen()),
     ];
   }
 
   @override
-  List<Pattern> get pathPatterns => ['/', '/$LOCATION_SEARCH'];
+  List get pathBlueprints => ['/', '/$LOCATION_SEARCH'];
 }
 
-class InputLocation extends BeamLocation<BeamState> {
+class InputLocation extends BeamLocation {
   @override
   Widget builder(BuildContext context, Widget navigator) {
     return MultiProvider(
@@ -50,9 +50,9 @@ class InputLocation extends BeamLocation<BeamState> {
   List<BeamPage> buildPages(BuildContext context, BeamState state) {
     return [
       ...HomeLocation().buildPages(context, state),
-      if (state.pathPatternSegments.contains(LOCATION_INPUT))
+      if (state.pathBlueprintSegments.contains(LOCATION_INPUT))
         BeamPage(key: ValueKey(LOCATION_INPUT), child: InputScreen()),
-      if (state.pathPatternSegments.contains(LOCATION_CATEGORY_INPUT))
+      if (state.pathBlueprintSegments.contains(LOCATION_CATEGORY_INPUT))
         BeamPage(
             key: ValueKey(LOCATION_CATEGORY_INPUT),
             child: CategoryInputScreen()),
@@ -60,11 +60,11 @@ class InputLocation extends BeamLocation<BeamState> {
   }
 
   @override
-  List<Pattern> get pathPatterns =>
+  List get pathBlueprints =>
       ['/$LOCATION_INPUT', '/$LOCATION_INPUT/$LOCATION_CATEGORY_INPUT'];
 }
 
-class ItemLocation extends BeamLocation<BeamState> {
+class ItemLocation extends BeamLocation {
   @override
   List<BeamPage> buildPages(BuildContext context, BeamState state) {
     logger.d('path - ${state.uriBlueprint}\n${state.uri}');
@@ -84,7 +84,7 @@ class ItemLocation extends BeamLocation<BeamState> {
   }
 
   @override
-  List<Pattern> get pathPatterns => [
+  List get pathBlueprints => [
         '/$LOCATION_SEARCH/:$LOCATION_ITEM_ID/:$LOCATION_CHATROOM_ID',
         '/$LOCATION_ITEM/:$LOCATION_ITEM_ID/:$LOCATION_CHATROOM_ID',
         '/:$LOCATION_CHATROOM_ID'
